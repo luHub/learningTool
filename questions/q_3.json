@@ -1,0 +1,1 @@
+{"id":3,"question":{"question":"Which one is a checked Exception?","type":"exception","id":1},"choiceList":[{"id":1,"description":"IOException"},{"id":2,"description":"AnnotationTypeMismatchException"},{"id":3,"description":"FileSystemAlreadyExistsException"}],"answer":{"answer":"IOException","answerId":1,"dtrue":false,"atrue":true,"btrue":false,"ctrue":false}}
