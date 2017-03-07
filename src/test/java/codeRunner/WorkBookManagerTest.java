@@ -12,7 +12,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -38,8 +37,6 @@ public class WorkBookManagerTest {
 	private String workbookName = "MyFirstCodeHomeWork";
 	private String questions = "questions";
 	private String codeRunner = "codeRunner";
-	private String contend = "contend";
-	
 	
 	@After
 	public void after() throws IOException{
@@ -83,10 +80,7 @@ public class WorkBookManagerTest {
 		WorkbookManager.createWorkbook(user, workbookName);
 		Path userPath = Paths.get(user);
 		Path workbookPath = Paths.get(user, workbookName);
-		visit(userPath, workbookPath,this.workbookName);
-	}
 
-	private void visit(Path userPath, Path workbookPath,String workbookName) throws IOException {
 		FileVisitor<? super Path> visitor = new FileVisitor<Path>() {
 
 			@Override
@@ -101,12 +95,6 @@ public class WorkBookManagerTest {
 					assertEquals(codeRunnerPath.toString(), workbookPath.toString());
 					return FileVisitResult.CONTINUE;
 				}
-				if (dir.getFileName().toString().equals(contend)) {
-					Path contendsPath = Paths.get(dir.toString(), "..").normalize();
-					assertEquals(contendsPath.toString(), workbookPath.toString());
-					return FileVisitResult.CONTINUE;
-				}
-				
 				if (dir.getFileName().toString().equals(workbookName)) {
 					Path workPath = Paths.get(dir.toString()).normalize();
 					assertEquals(workPath.toString(), workbookPath.toString());
@@ -139,33 +127,9 @@ public class WorkBookManagerTest {
 	}
 	
 	@Test
-	public void renameWorkbook() throws IOException{
-		//Create Workbook
-		WorkbookManager.createWorkbook(user, workbookName);
-		Path questionPath = Paths.get(user, workbookName,questions,"question.txt");
-		Path codePath = Paths.get(user,workbookName,codeRunner,"test.java");
-		Path infoPath = Paths.get(user, workbookName,contend,"textInformation.txt");
-		
-		Files.createFile(questionPath);
-		Files.createFile(codePath);
-		Files.createFile(infoPath);
-		
-		//Rename Workbook:
-		String newWorkbookName="changedName";
-		assertTrue(WorkbookManager.renameWorkbook(user, workbookName, newWorkbookName));
-		
-		//Check File Structure
-		Path userPath = Paths.get(user);
-		Path workbookPath = Paths.get(user, newWorkbookName);
-		visit(userPath, workbookPath,newWorkbookName);
-		
+	public void createCodeRunnerProject(){
 		
 	}
-		
-	
-	//TODO Move to Code test runner
-	@Test
-	public void createCodeRunnerProject(){}
 
 	@Test
 	public void createCodeRunnerSource() throws IOException {
