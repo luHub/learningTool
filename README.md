@@ -2,6 +2,7 @@
 
 Basically the idea goes as follows, a client server architecture:
 
+
 +----------------------------------------------------+
 |                                                    |
 |                                                    |
@@ -28,6 +29,8 @@ Basically the idea goes as follows, a client server architecture:
 |  +--------------+ +-------------+ +-------------+  |
 |  Workbook Module                                   |
 +----------------------------------------------------+
+
+
 
 
 1)Updates
