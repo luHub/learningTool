@@ -5,9 +5,9 @@ Basically the idea goes as follows, a client server architecture:
 +----------------------------------------------------+
 |                                                    |
 |                                                    |
-|                                                    |
+|                                                    |  Persistance
 |                 Learning Tool                      |  Server
-|                 Module                             |
+|                 Module                             |  
 |                                                    |
 |                                                    |
 +--------+--+------------+-+--------------+-+--------+
