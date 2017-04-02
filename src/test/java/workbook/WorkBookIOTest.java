@@ -1,42 +1,53 @@
-package codeRunner;
+package workbook;
 
 import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
-import java.nio.file.DirectoryStream;
 import java.nio.file.FileVisitResult;
 import java.nio.file.FileVisitor;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.After;
-import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import commons.WorkbookManager;
+import commons.WorkbookIO;
 import commons.coderunner.CodeRunnerCreator;
+import commons.info.InfoIO;
 import junit.framework.AssertionFailedError;
 import meta.coderunner.CodeDTO;
 import meta.coderunner.CompileInstructions;
 import meta.coderunner.ConfigDTO;
 import meta.coderunner.Language;
 import meta.coderunner.RunInstructions;
+import meta.working.ConvertableToJSON;
+import meta.working.FileDTO;
+import meta.working.InfoDTO;
+import meta.working.MapInfoDTO;
 import meta.working.WorkingSpaceDTO;
 
-public class WorkBookManagerTest {
+
+/**
+ * Functional Tests for Entire Workbook
+ * @author mey
+ *
+ */
+public class WorkBookIOTest {
 	
-	private String user = "foo";
-	private String workbookName = "MyFirstCodeHomeWork";
-	private String questions = "questions";
-	private String codeRunner = "codeRunner";
+	private static final String user = "foo";
+	private static final String workbookName = "MyFirstCodeHomeWork";
+	private static final String questions = "questions";
+	private static final String codeRunnerDirectory = "code";
+    private static final String infoDirectory = "info";
+    private static final String imageDirectory = "img";
 	
 	@After
 	public void after() throws IOException{
@@ -70,42 +81,63 @@ public class WorkBookManagerTest {
 		}
 	}
 
+	/**
+	 * Creates the bare bones of a new workbook divided into
+	 * question, info, code directories. 
+	 * @throws IOException
+	 */
 	@Test
 	public void createDirectoriesForWorkbook() throws IOException {
-		/**********************************************************
-		 * Test the following directory creation:
-		 * 
-		 * foo |- workbook | |-questions |-codeRunner
-		 ***********************************************************/
-		WorkbookManager.createWorkbook(user, workbookName);
+		WorkbookIO.createWorkbook(user, workbookName);
 		Path userPath = Paths.get(user);
 		Path workbookPath = Paths.get(user, workbookName);
+		Path imagePath = Paths.get(user,workbookName,imageDirectory);
+		Path questionPath = Paths.get(user,workbookName,questions);
+		Path infoPath = Paths.get(user,workbookName,infoDirectory);
+		
+		Path codePath = Paths.get(user,workbookName,codeRunnerDirectory);
 
-		FileVisitor<? super Path> visitor = new FileVisitor<Path>() {
+		FileVisitor<? super Path> visitor = new FileVisitor<Path>() { 
 
 			@Override
 			public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-				if (dir.getFileName().toString().equals(questions)) {
-					Path questionPath = Paths.get(dir.toString(), "..").normalize();
-					assertEquals(questionPath.toString(), workbookPath.toString());
-					return FileVisitResult.CONTINUE;
-				}
-				if (dir.getFileName().toString().equals(codeRunner)) {
-					Path codeRunnerPath = Paths.get(dir.toString(), "..").normalize();
-					assertEquals(codeRunnerPath.toString(), workbookPath.toString());
-					return FileVisitResult.CONTINUE;
-				}
-				if (dir.getFileName().toString().equals(workbookName)) {
-					Path workPath = Paths.get(dir.toString()).normalize();
-					assertEquals(workPath.toString(), workbookPath.toString());
-					return FileVisitResult.CONTINUE;
-				}
 				if (dir.getFileName().toString().equals(user)) {
 					Path foundUserPath = Paths.get(dir.toString()).normalize();
 					assertEquals(foundUserPath.toString(), userPath.toString());
 					return FileVisitResult.CONTINUE;
 				}
-				throw new AssertionFailedError();
+				
+				if (dir.getFileName().toString().equals(questions)) {
+					Path founDquestionPath = Paths.get(dir.toString()).normalize();
+					assertEquals(founDquestionPath.toString(), questionPath.toString());
+					return FileVisitResult.CONTINUE;
+				}
+				
+				if (dir.getFileName().toString().equals(infoDirectory)) {
+					Path founPath = Paths.get(dir.toString()).normalize();
+					assertEquals(founPath.toString(), infoPath.toString());  
+					return FileVisitResult.CONTINUE;  
+				}  
+				
+				if (dir.getFileName().toString().equals(codeRunnerDirectory)) {
+					Path foundUserPath = Paths.get(dir.toString()).normalize();
+					assertEquals(foundUserPath.toString(), codePath.toString());
+					return FileVisitResult.CONTINUE;
+				}
+				
+				if (dir.getFileName().toString().equals(imageDirectory)) {
+					Path foundUserPath = Paths.get(dir.toString()).normalize();
+					assertEquals(foundUserPath.toString(), imagePath.toString());
+					return FileVisitResult.CONTINUE;
+				}
+				
+				if (dir.getFileName().toString().equals(workbookName)) {
+					Path foundUserPath = Paths.get(dir.toString()).normalize();
+					assertEquals(foundUserPath.toString(), workbookPath.toString());
+					return FileVisitResult.CONTINUE;
+				}
+			
+				throw new AssertionFailedError(); 
 			}
 
 			@Override
@@ -123,13 +155,53 @@ public class WorkBookManagerTest {
 				return FileVisitResult.CONTINUE;
 			}
 		};
+		
 		Files.walkFileTree(userPath, visitor);
 	}
 	
+
+	/**
+	 * Creates an Info File inside info folder
+	 * @throws IOException 
+	 */
 	@Test
-	public void createCodeRunnerProject(){
-		
+	public void createInfoFile() throws IOException{
+		//1. Creates a workbook
+		WorkbookIO.createWorkbook(user, workbookName);
+		//2. Create an Infofile		
+		InfoDTO info = new InfoDTO();
+		info.setText("Hello Text!");
+		info.setContainsText(true);		 
+		final Integer fileId=1;
+		final Integer position = 1;
+		final String ext = "json";
+		final MapInfoDTO mapInfoDTO = new MapInfoDTO();
+		mapInfoDTO.getMap().put(position, info);
+		Path infoPath = Paths.get(user,workbookName,infoDirectory); 
+		FileDTO<Integer,ConvertableToJSON> fileDTO = new FileDTO(fileId, infoPath, ext);
+		fileDTO.setContend(mapInfoDTO);
+		InfoIO.createFile(fileDTO);  
+		//3. Read Created Info file
+		Path infoFilePath = Paths.get(infoPath.toString(), fileId.toString()+"."+ext);
+		MapInfoDTO retrievedFile = InfoIO.readFile(infoFilePath); 
+		//4. Asserts
+		assertEquals(info.getText(),retrievedFile.getMap().get(position).getText()); 
 	}
+	
+	@Test
+	public void getInfoFileListFromWorkbook() throws IOException{
+		//1. Creates a workbook
+		WorkbookIO.createWorkbook(user, workbookName);
+		//2. Creates 10 info files		
+		//3. Reads Folder and retrieves expected list
+		//4. assert expected list
+	}
+	
+	
+	
+	@Ignore
+	@Test
+	public void createCodeRunnerProject(){}
 
 	@Test
 	public void createCodeRunnerSource() throws IOException {

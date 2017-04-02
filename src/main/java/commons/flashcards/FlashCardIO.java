@@ -96,7 +96,7 @@ public class FlashCardIO {
 	}
 
 	public static boolean deleteQuestion(int id) throws IOException {
-		Path path = Paths.get(QUESTION_DIRECTORY + "\\" + FILE_PREFIX+"_"+id+".json");
+		Path path = Paths.get(QUESTION_DIRECTORY + "\\" + FILE_PREFIX + "_" + id + ".json");
 		if (Files.exists(path)) {
 			Files.delete(path);
 			return true;
