@@ -30,6 +30,7 @@ import meta.coderunner.Language;
 import meta.coderunner.RunInstructions;
 import meta.working.ConvertableToJSON;
 import meta.working.FileDTO;
+import meta.working.INFO_TYPE;
 import meta.working.InfoDTO;
 import meta.working.MapInfoDTO;
 import meta.working.WorkingSpaceDTO;
@@ -171,7 +172,7 @@ public class WorkBookIOTest {
 		//2. Create an Infofile		
 		InfoDTO info = new InfoDTO();
 		info.setText("Hello Text!");
-		info.setContainsText(true);		 
+		info.setType(INFO_TYPE.TEXT);	 
 		final Integer fileId=1;
 		final Integer position = 1;
 		final String ext = "json";

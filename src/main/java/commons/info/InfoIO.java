@@ -64,10 +64,19 @@ public class InfoIO {
 			MapInfoDTO mapInfoDTO = readJsonFile(name);
 			//Extract Id from FileName:
 			Integer id = Integer.valueOf(name.getFileName().toString().replace(".json", "")); 
-			FileDTO<Integer,MapInfoDTO> fileDTO = new FileDTO<>(id,name,"json");
+			FileDTO<Integer,MapInfoDTO> fileDTO = new FileDTO<>(id,name);
 			fileDTO.setContend(mapInfoDTO);
 			allFiles.put(fileDTO.getId(), fileDTO);
 		}
 		return allFiles;
+	}
+
+	public static boolean deleteFile(FileDTO fileDTO) throws IOException {
+		Path path = fileDTO.getFilePath();
+		if (Files.exists(path)) {
+			Files.delete(path);
+			return true;
+		}
+		return false;
 	}
 }

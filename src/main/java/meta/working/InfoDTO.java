@@ -1,7 +1,6 @@
 package meta.working;
 
-import java.util.HashMap;
-import java.util.Map;
+
 
 //Create a Content Map
 //Text 
@@ -12,8 +11,7 @@ public class InfoDTO implements ConvertableToJSON{
 	private String text;
 	private String url;
 	private String imagePath;
-	private Boolean containsImage=false;
-	private Boolean containsText=false;
+	private INFO_TYPE info_type;
 	
 	public String getText() {
 		return text;
@@ -33,18 +31,10 @@ public class InfoDTO implements ConvertableToJSON{
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-	public Boolean getContainsImage() {
-		return containsImage;
+	public INFO_TYPE getType() {
+		return info_type;
 	}
-	public void setContainsImage(Boolean containsImage) {
-		this.containsImage = containsImage;
+	public void setType(INFO_TYPE infoType) {
+		this.info_type = infoType;
 	}
-	public Boolean getContainsText() {
-		return containsText;
-	}
-	public void setContainsText(Boolean containsText) {
-		this.containsText = containsText;
-	}
-
-
 }

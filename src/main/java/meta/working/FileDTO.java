@@ -7,11 +7,19 @@ public class FileDTO<T, U> {
 
 	private T id;
 	private U contend;
+	@Deprecated
 	private String extension;
 	private Path path;
 
 	
 	public FileDTO(){}
+	
+	//Includes Extension
+	public FileDTO(T id,Path fullPath){
+		this.path = fullPath;
+		this.id=id;
+	}
+	
 	
 	public FileDTO(T id,Path path, String ext){
 		this.setPath(Paths.get(path.toString(),id.toString()+"."+ext.toString()));
@@ -35,8 +43,14 @@ public class FileDTO<T, U> {
 		this.contend = contend;
 	}
 
+	//TODO: Remange to getDirectory Path
 	public Path getPath() {
 		return path;
+	}
+	
+	//TODO: REname to Path fix this magic .json
+	public Path getFilePath(){
+		return Paths.get(this.path.toString(), this.id+".json");
 	}
 
 	public void setPath(Path path) {
