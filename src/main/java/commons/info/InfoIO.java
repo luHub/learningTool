@@ -20,12 +20,13 @@ import meta.flashcardsdto.MultipleChoiceFlashCardDTO;
 import meta.working.ConvertableToJSON;
 import meta.working.FileDTO;
 import meta.working.InfoDTO;
+import meta.working.InfoLayoutListDTO;
 import meta.working.MapInfoDTO;
 import util.JsonConverter;
 
 public class InfoIO {
 
-	public static void createFile(FileDTO<Integer, ConvertableToJSON> file) throws IOException {
+	public static void createFile(FileDTO<Integer, ? extends ConvertableToJSON> file) throws IOException {
 		if (Files.exists(file.getPath())) {
 			Files.delete(file.getPath());
 		}
@@ -38,11 +39,26 @@ public class InfoIO {
 		writer.flush();
 		writer.close();
 	}
+	
+	// To return a layoutDTO file
+	public static <T> T readFile(Path path,Class<T> classType)  throws IOException, JsonParseException, JsonMappingException {
+		BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+		String line;
+		StringBuilder stringFromFile = new StringBuilder();
+		while ((line = reader.readLine()) != null) {
+			stringFromFile.append(line);
+		}
+		reader.close();
+		return  JsonConverter.convertToObject(stringFromFile.toString(),classType);
+	}
 
+	//Use Generic
+	@Deprecated 
 	public static MapInfoDTO readFile(Path infoPath) throws JsonParseException, JsonMappingException, IOException {
 		return readJsonFile(infoPath);
 	}
-
+	
+	@Deprecated
 	private static MapInfoDTO readJsonFile(Path path) throws IOException, JsonParseException, JsonMappingException {
 		BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
 		StringBuilder stringFromFile = new StringBuilder();

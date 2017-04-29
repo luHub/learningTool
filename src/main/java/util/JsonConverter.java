@@ -20,10 +20,9 @@ import meta.working.MapInfoDTO;
 
 public class JsonConverter {
 	
-	public static ConvertableToJSON convertToObject(String jsonString) throws JsonParseException, JsonMappingException, IOException{
+	public static <T>  T convertToObject(String jsonString, Class<T> classType) throws JsonParseException, JsonMappingException, IOException{
 		ObjectMapper mapper = new ObjectMapper();
-		ConvertableToJSON genericDTO = mapper.readValue(jsonString, ConvertableToJSON.class);
-		return genericDTO;
+		return mapper.readValue(jsonString, classType);
 	}
 
 	public static String convertToJson(ConvertableToJSON dto) throws JsonProcessingException{

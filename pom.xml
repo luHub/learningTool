@@ -4,8 +4,8 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.flashcards.heguer</groupId>
   <artifactId>flash</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>flashCarderCreator</name>
+  <version>0.0.2-SNAPSHOT</version>
+  <name>flash Card Creator</name>
   <description>Create Flash Cards in JSON for Multiple Apps</description>
   <dependencies>
   <dependency>

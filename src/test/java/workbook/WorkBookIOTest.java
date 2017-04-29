@@ -32,6 +32,8 @@ import meta.working.ConvertableToJSON;
 import meta.working.FileDTO;
 import meta.working.INFO_TYPE;
 import meta.working.InfoDTO;
+import meta.working.InfoLayoutDTO;
+import meta.working.InfoLayoutListDTO;
 import meta.working.MapInfoDTO;
 import meta.working.WorkingSpaceDTO;
 
@@ -196,6 +198,29 @@ public class WorkBookIOTest {
 		//2. Creates 10 info files		
 		//3. Reads Folder and retrieves expected list
 		//4. assert expected list
+	}
+	
+	@Test
+	public void readInfoLayoutDTO() throws IOException{
+		//1. Creates a workbook
+				WorkbookIO.createWorkbook(user, workbookName);
+		Path infoPath = Paths.get(user, workbookName,infoDirectory);
+		//2. InfoLatoutStuff
+		InfoLayoutListDTO illDTO = new InfoLayoutListDTO();
+		InfoLayoutDTO infoLayoutDTO = new InfoLayoutDTO();
+		infoLayoutDTO.setInfoId(1);
+		infoLayoutDTO.setInfoFileId(1);
+		illDTO.getInfoLayoutList().add(infoLayoutDTO);
+		FileDTO<Integer,InfoLayoutListDTO> fileDTO = new FileDTO<>();
+		fileDTO.setPath(infoPath);
+		fileDTO.setContend(illDTO);
+		//InfoIO.createLayoutInfoFile(fileDTO);
+		InfoIO.createFile(fileDTO);
+		
+		InfoLayoutListDTO illDTORetrieved =InfoIO.readFile(infoPath, InfoLayoutListDTO.class);
+		
+		assertEquals(illDTORetrieved.getInfoLayoutList().get(0).getInfoId(),infoLayoutDTO.getInfoId());
+		
 	}
 	
 	

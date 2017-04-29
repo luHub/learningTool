@@ -9,7 +9,7 @@ package meta.working;
 public class InfoDTO implements ConvertableToJSON{
 	
 	private String text;
-	private String url;
+	
 	private String imagePath;
 	private INFO_TYPE info_type;
 	
@@ -19,12 +19,7 @@ public class InfoDTO implements ConvertableToJSON{
 	public void setText(String text) {
 		this.text = text;
 	}
-	public String getUrl() {
-		return url;
-	}
-	public void setUrl(String url) {
-		this.url = url;
-	}
+	
 	public String getImagePath() {
 		return imagePath;
 	}
