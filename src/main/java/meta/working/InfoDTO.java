@@ -32,4 +32,5 @@ public class InfoDTO implements ConvertableToJSON{
 	public void setType(INFO_TYPE infoType) {
 		this.info_type = infoType;
 	}
+	
 }
