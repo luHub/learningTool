@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +17,10 @@ import org.junit.Test;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+
+//import com.fasterxml.jackson.core.JsonParseException;
+//import com.fasterxml.jackson.core.JsonProcessingException;
+//import com.fasterxml.jackson.databind.JsonMappingException;
 
 import commons.flashcards.FlashCardCreator;
 import commons.flashcards.FlashCardIO;
@@ -91,7 +93,7 @@ public class FlashCardTest {
 	private String readFlashCardTestFile(){
 		StringBuilder jsonStringFromFile=new StringBuilder();
 		Path currentRelativePath = Paths.get("");
-		Path path = Paths.get(currentRelativePath.toAbsolutePath().toString()+"\\src\\test\\resources\\FlashCartTest.json");
+		Path path = Paths.get(currentRelativePath.toAbsolutePath().toString()+"/src/test/resources/FlashCartTest.json");
 		try (BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8)) {
 		    String line = null;
 		    while ((line = reader.readLine()) != null) {

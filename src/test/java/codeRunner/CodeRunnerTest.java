@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import org.junit.Test;
 
-import commons.CodeRunner;
-
 public class CodeRunnerTest {
 
 	//TODO

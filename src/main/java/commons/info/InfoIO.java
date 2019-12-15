@@ -12,10 +12,11 @@ import java.util.HashMap;
 import java.util.Map;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+
+import commons.info.util.JsonConverter;
 import meta.working.ConvertableToJSON;
 import meta.working.FileDTO;
 import meta.working.MapInfoDTO;
-import util.JsonConverter;
 
 public class InfoIO { 
 
@@ -59,7 +60,7 @@ public class InfoIO {
 		while ((line = reader.readLine()) != null) {
 			stringFromFile.append(line);
 		}
-
+		System.out.println("String to file: "+stringFromFile.toString());
 		MapInfoDTO fileAsDTO = JsonConverter.convertToInfoObject(stringFromFile.toString());
 		reader.close();
 		return fileAsDTO;
@@ -71,7 +72,7 @@ public class InfoIO {
 		Map<Integer, FileDTO<Integer, MapInfoDTO>> allFiles = new HashMap<>();
 		DirectoryStream<Path> dirs = Files.newDirectoryStream(path);
 		for (Path name : dirs) {
-			MapInfoDTO mapInfoDTO = readJsonFile(name);
+			MapInfoDTO mapInfoDTO = readFile(name,MapInfoDTO.class);
 			// Extract Id from FileName:
 			Integer id = Integer.valueOf(name.getFileName().toString().replace(".json", ""));
 			FileDTO<Integer, MapInfoDTO> fileDTO = new FileDTO<>(id, name);

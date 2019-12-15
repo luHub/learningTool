@@ -7,18 +7,29 @@
   <version>0.0.2-SNAPSHOT</version>
   <name>flash Card Creator</name>
   <description>Create Flash Cards in JSON for Multiple Apps</description>
+  <properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+  </properties>
   <dependencies>
   <dependency>
   <groupId>junit</groupId>
   <artifactId>junit</artifactId>
   <version>4.12</version>
+  
 </dependency>
-   <dependency>
-		<groupId>com.fasterxml.jackson.core</groupId>
-		<artifactId>jackson-databind</artifactId>
-		<version>2.6.3</version>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-databind</artifactId>
+	    <version>2.10.1</version>
 	</dependency>
-  </dependencies>
+	<dependency>
+	    <groupId>com.fasterxml.jackson.core</groupId>
+	    <artifactId>jackson-core</artifactId>
+	    <version>2.10.1</version>
+	</dependency>
+</dependencies>
+  
   <repositories>
     <repository>
       <snapshots>
@@ -43,22 +54,22 @@
     </pluginRepository>
   </pluginRepositories>
   <build>
-    <sourceDirectory>C:\Users\mey\workspace\flash\src\main\java</sourceDirectory>
-    <scriptSourceDirectory>C:\Users\mey\workspace\flash\src\main\scripts</scriptSourceDirectory>
-    <testSourceDirectory>C:\Users\mey\workspace\flash\src\test\java</testSourceDirectory>
-    <outputDirectory>C:\Users\mey\workspace\flash\target\classes</outputDirectory>
-    <testOutputDirectory>C:\Users\mey\workspace\flash\target\test-classes</testOutputDirectory>
+    <sourceDirectory>src\main\java</sourceDirectory>
+    <scriptSourceDirectory>src\main\scripts</scriptSourceDirectory>
+    <testSourceDirectory>src\test\java</testSourceDirectory>
+    <outputDirectory>target\classes</outputDirectory>
+    <testOutputDirectory>target\test-classes</testOutputDirectory>
     <resources>
       <resource>
-        <directory>C:\Users\mey\workspace\flash\src\main\resources</directory>
+        <directory>src\main\resources</directory>
       </resource>
     </resources>
     <testResources>
       <testResource>
-        <directory>C:\Users\mey\workspace\flash\src\test\resources</directory>
+        <directory>src\test\resources</directory>
       </testResource>
     </testResources>
-    <directory>C:\Users\mey\workspace\flash\target</directory>
+    <directory>target</directory>
     <finalName>flash-0.0.1-SNAPSHOT</finalName>
     <pluginManagement>
       <plugins>
@@ -81,38 +92,6 @@
       </plugins>
     </pluginManagement>
     <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
-        <executions>
-          <execution>
-            <id>default-compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-            <configuration>
-              <source>1.8</source>
-              <target>1.8</target>
-            </configuration>
-          </execution>
-          <execution>
-            <id>default-testCompile</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>testCompile</goal>
-            </goals>
-            <configuration>
-              <source>1.8</source>
-              <target>1.8</target>
-            </configuration>
-          </execution>
-        </executions>
-        <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-        </configuration>
-      </plugin>
       <plugin>
         <artifactId>maven-clean-plugin</artifactId>
         <version>2.5</version>
@@ -209,7 +188,7 @@
               <goal>site</goal>
             </goals>
             <configuration>
-              <outputDirectory>C:\Users\mey\workspace\flash\target\site</outputDirectory>
+              <outputDirectory>target\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -225,7 +204,7 @@
               <goal>deploy</goal>
             </goals>
             <configuration>
-              <outputDirectory>C:\Users\mey\workspace\flash\target\site</outputDirectory>
+              <outputDirectory>flash\target\site</outputDirectory>
               <reportPlugins>
                 <reportPlugin>
                   <groupId>org.apache.maven.plugins</groupId>
@@ -236,18 +215,22 @@
           </execution>
         </executions>
         <configuration>
-          <outputDirectory>C:\Users\mey\workspace\flash\target\site</outputDirectory>
-          <reportPlugins>
-            <reportPlugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-project-info-reports-plugin</artifactId>
-            </reportPlugin>
-          </reportPlugins>
+          <outputDirectory>flash\target\site</outputDirectory>
         </configuration>
       </plugin>
     </plugins>
   </build>
   <reporting>
-    <outputDirectory>C:\Users\mey\workspace\flash\target\site</outputDirectory>
+    <outputDirectory>flash\target\site</outputDirectory>
   </reporting>
+  
+  <!--            <reportPlugins>
+            <reportPlugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-project-info-reports-plugin</artifactId>
+            </reportPlugin>
+          </reportPlugins>
+  -->
+  
 </project>
+

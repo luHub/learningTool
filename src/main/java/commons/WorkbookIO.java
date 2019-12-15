@@ -1,17 +1,10 @@
 package commons;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import meta.working.FileDTO;
-import meta.working.InfoDTO;
-import util.JsonConverter;
 
 //Later implement interface and later factory so we can manage workbooks from
 //different backends. 

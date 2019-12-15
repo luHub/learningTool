@@ -11,10 +11,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -181,12 +178,12 @@ public class WorkBookIOTest {
 		final MapInfoDTO mapInfoDTO = new MapInfoDTO();
 		mapInfoDTO.getMap().put(position, info);
 		Path infoPath = Paths.get(user,workbookName,infoDirectory); 
-		FileDTO<Integer,ConvertableToJSON> fileDTO = new FileDTO(fileId, infoPath, ext);
+		FileDTO<Integer,ConvertableToJSON> fileDTO = new FileDTO<Integer, ConvertableToJSON>(fileId, infoPath, ext);
 		fileDTO.setContend(mapInfoDTO);
 		InfoIO.createFile(fileDTO);  
 		//3. Read Created Info file
 		Path infoFilePath = Paths.get(infoPath.toString(), fileId.toString()+"."+ext);
-		MapInfoDTO retrievedFile = InfoIO.readFile(infoFilePath); 
+		MapInfoDTO retrievedFile = InfoIO.readFile(infoFilePath,MapInfoDTO.class); 
 		//4. Asserts
 		assertEquals(info.getText(),retrievedFile.getMap().get(position).getText()); 
 	}
